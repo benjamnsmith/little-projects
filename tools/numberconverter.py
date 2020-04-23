@@ -39,7 +39,10 @@ def main():
         except NameError:
             print("That is not a valid number")
     elif (t == "hex"):
-        hexa(num)
+        try: 
+            hexa(num)
+        except ValueError:
+            print("That is not a valid number")
     elif (t == "bin"):
         try:
             bina(num)
