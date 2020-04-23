@@ -1,4 +1,4 @@
-# myRepository
+# Projects
 
 Contains: 
 1. Python projects
