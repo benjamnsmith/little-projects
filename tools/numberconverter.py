@@ -1,7 +1,7 @@
 import sys
 
 # I have this set up in my bash profile as:
-#   alias convert="python 3 PATH/TO/FILE/numberconverter.py"
+#   alias convert="python3 PATH/TO/FILE/numberconverter.py"
 # So that I can call it with convert <type> <number>
 
 
