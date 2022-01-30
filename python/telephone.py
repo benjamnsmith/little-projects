@@ -25,7 +25,7 @@ try:
     print("according to the keypad letters (Think about way back when texting was with only\nthe digits).\n")
     num = input("Please enter your phone number as xxx-xxx-xxxx: ")
 
-    if not re.search(r"^[0-9]+[0-9]+[0-9]+", num):
+    if not re.search(r"^[0-9]{3}[0-9]{3}[0-9]{4}", num):
         print("Follow the instructions.")
         exit()
     strs = []
