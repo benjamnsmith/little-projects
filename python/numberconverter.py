@@ -5,8 +5,6 @@ import re
 #   alias convert="python3 PATH/TO/FILE/numberconverter.py"
 # So that I can call it with convert <number>
 
-# arg 1: num
-
 def decimal(num):
     print("Binary:      ", bin(num))
     print("Hexadecimal: ", hex(num)) 
