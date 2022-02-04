@@ -1,8 +1,8 @@
-from importlib.abc import ResourceLoader
 import nltk
+from random import random
 
-words = [w for w in nltk.corpus.words.words('en') if len(w) == 5 and w.islower()]
-words = set(words)
+word_list = [w for w in nltk.corpus.words.words('en') if len(w) == 5 and w.islower()]
+words = set(word_list)
 
 done = False
 goal = [-1, -1, -1, -1, -1]
@@ -10,6 +10,15 @@ ans = [' ', ' ', ' ', ' ', ' ']
 confirmed = {}
 confirmed_not = []
 recs = {}
+
+# ZERO PASS
+# Remove words that have letters we know are not in the word
+# ie. if we know the word does not contain a 't', remove all words with 't'
+def pass_zero(anti):
+    for rec in recs:
+        for letter in anti:
+            if letter in rec:
+                recs[rec] = -1
 
 # FIRST PASS
 # Remove words that don't have confirmed letters
@@ -52,15 +61,6 @@ def pass_three(confirmed):
                 if rec[curlist[i]] == letter:
                     recs[rec] = -1
 
-# ZERO PASS
-# Remove words that have letters we know are not in the word
-# ie. if we know the word does not contain a 't', remove all words with 't'
-def pass_zero(anti):
-    for rec in recs:
-        for letter in anti:
-            if letter in rec:
-                recs[rec] = -1
-
 def getRecommendations(letters):
     global recs
     global confirmed_not
@@ -77,12 +77,11 @@ def getRecommendations(letters):
     pass_three(letters)
 
 
-def countRecs():
-    global recs
+def countRecs(dic):
     total = 0
 
-    for el in recs:
-        if recs[el] == 1:
+    for el in dic:
+        if dic[el] == 1:
             total += 1
     return total
 
@@ -117,24 +116,24 @@ def printKnown(lst):
 def filterRecs():
     global recs
 
-    tmp = recs
+    tmp = recs.copy()
 
     # 13 least common letters in te alphabet, from least frequent (q) to more frequent (m)
-    least_common = ['q', 'j', 'z', 'x', 'v', 'k', 'w', 'y', 'f', 'b', 'g', 'h', 'm']
+    least_common = ['q', 'j', 'z', 'x', 'v', 'k', 'w', 'y', 'f', 'b', 'g', 'h', 'm', 'p', 'd', 'u', 'c', 'l', 's', 'n', 't', 'o', 'i', 'r', 'a', 'e']
 
-    for rec in tmp:
+    while countRecs(tmp) > 20:
         for letter in least_common:
-            if letter in rec:
-                tmp[rec] = -1
+            for rec in tmp:
+                if letter in rec:
+                    tmp[rec] -= 1
     return tmp
 
 
 def printRecs():
-    if countRecs() > 20:
+    global recs
+    here = recs.copy()
+    if countRecs(here) > 20:
         here = filterRecs()
-    else:
-        global recs
-        here = recs
     message = False
     iter = 0
     for r in here:
@@ -149,10 +148,14 @@ def printRecs():
                 iter = 0
     print()
 
+starter = word_list[int(random()*len(word_list))]
+
 print("\n========= GET LIVE WORDLE RECOMMENDATIONS =========\n")
 print("  We will give you live wordle recommendations")
 print("  all you have to do is come up with a starting")
 print("  word!")
+print()
+print("  Need a good starting word? Try: %s" % (starter))
 
 initRecs()
 try:
