@@ -119,6 +119,7 @@ def filterRecs():
 
     tmp = recs
 
+    # 13 least common letters in te alphabet, from least frequent (q) to more frequent (m)
     least_common = ['q', 'j', 'z', 'x', 'v', 'k', 'w', 'y', 'f', 'b', 'g', 'h', 'm']
 
     for rec in tmp:
