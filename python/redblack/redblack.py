@@ -82,7 +82,7 @@ class RedBlack():
             self.lr = False
         
         if conflict:
-            return
+            return # FINISH
 
 
     def insert(self, val):
